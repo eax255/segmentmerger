@@ -1,4 +1,6 @@
-#include <argp.h>
+#include <string.h>
+#include <ctype.h>
+#include <tuple>
 #include <vector>
 #include <string>
 #include <iostream>

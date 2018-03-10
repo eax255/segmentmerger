@@ -1,9 +1,9 @@
-//requires: [module argparser] [namespace fs] [header <iostream>] [module parser]
+//requires: [module argparser_conf] [namespace fs] [header <iostream>] [module parser]
 //provides: [function main]
 
-int main(int argc, char* argv[]){
-    arguments args;
-    argp_parse(&argparser, argc, argv, 0, 0, &args);
+int main(int argc, const char* argv[]){
+    config args;
+    args.parse_args(argc,argv);
     parser modules;
     for(auto& it : args.search_path){
         if(args.recursive){
