@@ -37,13 +37,13 @@ public:
         std::cout<<"Usage: " << argv0 << " [OPTIONS...] " << positional << '\n';
         std::cout<<doc<<"\n\n";
         for(auto& opt : options){
-            if(isgraph(opt.key)) std::cout<<"  -"<<opt.key<<", ";
+            if(isgraph(opt.key)) std::cout<<"  -"<<(char)opt.key<<", ";
             else std::cout<<"      ";
             std::cout<<"--"<<opt.name<<' ';
             if(opt.argdesc != "")std::cout<<opt.argdesc;
             size_t nspace = 30;
             if(opt.argdesc.size()+opt.name.size()+2 > 30)std::cout<<'\n',nspace=38;
-            else nspace = 30-1-opt.argdesc.size()+opt.name.size();
+            else nspace = 30-1-opt.argdesc.size()-opt.name.size();
             while(nspace-- > 0)std::cout<<' ';
             std::cout<<opt.doc<<'\n';
         }

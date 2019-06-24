@@ -11,6 +11,17 @@ struct file{
             std::istringstream ss(l);
             std::string word;
             ss >> word;
+            if(word == "#pragma"){
+                ss >> word;
+                if(word.substr(0,4) == "once")continue;
+            }
+            if(word == "#include"){
+                ss >> word;
+                if(word[0] == '"'){
+                    requires.emplace_back("file",word.substr(1,word.size()-2));
+                    continue;
+                }
+            }
             if(word == "//provides:" or word == "//requires:"){
                 std::vector<std::pair<std::string,std::string>>* cont;
                 if(word == "//provides:")cont = &provides;
@@ -33,6 +44,7 @@ struct parser{
         files.emplace_back(in);
         files.back().contents = "COMPILING("+path.native()+")\n" + files.back().contents;
         files.back().path = path.native();
+        files.back().provides.emplace_back("file",files.back().path);
         for(auto& it : files.back().provides) providemap[it.first][it.second] = files.size();
     }
     void gen_program(std::ostream& out, std::pair<std::string, std::string> block, bool single){
